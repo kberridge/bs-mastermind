@@ -4,8 +4,7 @@
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 
-function Component2(Props) {
-  var greeting = Props.greeting;
+function PlayMasterMind(Props) {
   var match = React.useReducer((function (state, action) {
           if (action) {
             return /* record */[
@@ -34,10 +33,10 @@ function Component2(Props) {
                   onClick: (function (_event) {
                       return Curry._1(dispatch, /* Toggle */1);
                     })
-                }, "Toggle greeting"), match$1 ? greeting : null);
+                }, "Toggle greeting"), match$1 ? "Its gonna be mastermind!" : null);
 }
 
-var make = Component2;
+var make = PlayMasterMind;
 
 exports.make = make;
 /* react Not a pure module */

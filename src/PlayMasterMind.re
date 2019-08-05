@@ -10,7 +10,7 @@ type action =
   | Toggle;
 
 [@react.component]
-let make = (~greeting) => {
+let make = () => {
   let (state, dispatch) = React.useReducer((state, action) =>
   switch (action) {
   | Click => {...state, count: state.count + 1}
@@ -26,6 +26,6 @@ let make = (~greeting) => {
     <button onClick={_event => dispatch(Toggle)}>
       {ReasonReact.string("Toggle greeting")}
     </button>
-    {state.show ? ReasonReact.string(greeting) : ReasonReact.null}
+    {state.show ? ReasonReact.string("Its gonna be mastermind!") : ReasonReact.null}
   </div>;
 };

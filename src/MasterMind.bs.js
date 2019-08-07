@@ -3,12 +3,12 @@
 
 var List = require("bs-platform/lib/js/list.js");
 var Curry = require("bs-platform/lib/js/curry.js");
+var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 
 function countExactMatches(guess, secret) {
   var counter = function (count, guessPeg, secretPeg) {
-    var match = guessPeg === secretPeg;
-    if (match) {
+    if (guessPeg === secretPeg) {
       return count + 1 | 0;
     } else {
       return count;
@@ -25,8 +25,7 @@ function find(predicate, l) {
     var index = _index;
     if (l$1) {
       var a = l$1[0];
-      var match = Curry._2(predicate, index, a);
-      if (match) {
+      if (Curry._2(predicate, index, a)) {
         return /* tuple */[
                 index,
                 a
@@ -44,10 +43,10 @@ function find(predicate, l) {
 
 function countAllMatches(guess, secret) {
   var secretMatchTracker = Caml_array.caml_make_vect(List.length(secret), false);
-  var counter = function (agg, guessPeg) {
-    var count = agg[1];
+  var counter = function (param, guessPeg) {
+    var count = param[1];
     var found = find((function (i, p) {
-            if (p === guessPeg) {
+            if (Caml_obj.caml_equal(p, guessPeg)) {
               return !Caml_array.caml_array_get(secretMatchTracker, i);
             } else {
               return false;
@@ -62,7 +61,7 @@ function countAllMatches(guess, secret) {
             ];
     } else {
       return /* tuple */[
-              agg[0] + 1 | 0,
+              param[0] + 1 | 0,
               count
             ];
     }

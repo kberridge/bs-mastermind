@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ReasonReact Examples</title>
+  <title>MasterMind - TEA-BS</title>
 </head>
 <body>
-  <div id="root"></div>
-
-  <script src="Index.js"></script>
+  <script src="PlayMasterMind.js"></script>
+    <script>
+        window.onload = function () {
+            PlayMasterMind.main(document.getElementById("main"));
+        };
+    </script>
+    <div id='main'></div>
 </body>
 </html>

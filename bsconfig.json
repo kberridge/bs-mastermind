@@ -1,9 +1,6 @@
 
 {
   "name": "react-hooks-template",
-  "reason": {
-    "react-jsx": 3
-  },
   "sources": [
     {
       "dir" : "src",
@@ -21,7 +18,7 @@
   "suffix": ".bs.js",
   "namespace": true,
   "bs-dependencies": [
-    "reason-react",
+    "bucklescript-tea",
     "@glennsl/bs-jest"
   ],
   "refmt": 3

@@ -17,7 +17,7 @@ function countExactMatches(guess, secret) {
   return List.fold_left2(counter, 0, guess, secret);
 }
 
-function find(predicate, l) {
+function findi(predicate, l) {
   var _index = 0;
   var _l = l;
   while(true) {
@@ -45,7 +45,7 @@ function countAllMatches(guess, secret) {
   var secretMatchTracker = Caml_array.caml_make_vect(List.length(secret), false);
   var counter = function (param, guessPeg) {
     var count = param[1];
-    var found = find((function (i, p) {
+    var found = findi((function (i, p) {
             if (Caml_obj.caml_equal(p, guessPeg)) {
               return !Caml_array.caml_array_get(secretMatchTracker, i);
             } else {
@@ -82,7 +82,7 @@ function getScore(guess, secret) {
 }
 
 exports.countExactMatches = countExactMatches;
-exports.find = find;
+exports.findi = findi;
 exports.countAllMatches = countAllMatches;
 exports.getScore = getScore;
 /* No side effect */

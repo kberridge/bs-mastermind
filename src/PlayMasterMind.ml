@@ -34,7 +34,9 @@ let pegToLetter = function
 
 exception InvalidLetter
 
-let letterToPeg = function
+let letterToPeg letter =
+  let upperLetter = String.uppercase letter in
+  match upperLetter with
   | "R" -> Red
   | "G" -> Green
   | "B" -> Blue
@@ -107,9 +109,9 @@ let view_pastguess pastGuess =
       text (pegToLetter (List.nth guess 1));
       text (pegToLetter (List.nth guess 2));
       text (pegToLetter (List.nth guess 3));
-      text "SCORE: ";
+      text " SCORE: ";
       text ("exact: " ^ (string_of_int pastGuess.score.exactMatches));
-      text ("partial: " ^ (string_of_int pastGuess.score.colorMatches))
+      text (" partial: " ^ (string_of_int pastGuess.score.colorMatches))
     ]
 
 let view_pastguesses model =

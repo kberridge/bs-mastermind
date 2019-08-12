@@ -3,6 +3,7 @@
 
 var List = require("bs-platform/lib/js/list.js");
 var Vdom = require("bucklescript-tea/src-ocaml/vdom.js");
+var $$String = require("bs-platform/lib/js/string.js");
 var Tea_app = require("bucklescript-tea/src-ocaml/tea_app.js");
 var Tea_html = require("bucklescript-tea/src-ocaml/tea_html.js");
 var Caml_exceptions = require("bs-platform/lib/js/caml_exceptions.js");
@@ -28,8 +29,9 @@ function pegToLetter(param) {
 
 var InvalidLetter = Caml_exceptions.create("PlayMasterMind-ReactHooksTemplate.InvalidLetter");
 
-function letterToPeg(param) {
-  switch (param) {
+function letterToPeg(letter) {
+  var upperLetter = $$String.uppercase(letter);
+  switch (upperLetter) {
     case "B" : 
         return /* Blue */2;
     case "G" : 
@@ -205,11 +207,11 @@ function view_pastguess(pastGuess) {
                   /* :: */[
                     Tea_html.text(pegToLetter(List.nth(guess, 3))),
                     /* :: */[
-                      Tea_html.text("SCORE: "),
+                      Tea_html.text(" SCORE: "),
                       /* :: */[
                         Tea_html.text("exact: " + String(pastGuess[/* score */1][/* exactMatches */0])),
                         /* :: */[
-                          Tea_html.text("partial: " + String(pastGuess[/* score */1][/* colorMatches */1])),
+                          Tea_html.text(" partial: " + String(pastGuess[/* score */1][/* colorMatches */1])),
                           /* [] */0
                         ]
                       ]

@@ -18,10 +18,16 @@ type pastGuess = {
   score: score
 }
 
+type gameStatus = 
+  | Playing
+  | Won
+  | Lost
+
 type gameState = {
   secret: codePeg list;
   currentGuess: guess;
-  pastGuesses: pastGuess list
+  pastGuesses: pastGuess list;
+  gameStatus: gameStatus;
 }
 
 let pegToLetter = function
@@ -50,8 +56,11 @@ let emptyGuess = {one=""; two=""; three=""; four=""}
 let init () = {
   secret = [Red; Red; Green; Green]; (* todo: generate! *)
   currentGuess = emptyGuess;
-  pastGuesses = []
+  pastGuesses = [];
+  gameStatus = Playing;
 }
+
+let maxGuesses = 21
 
 let setPeg currentGuess index peg_str = 
   match index with
@@ -60,6 +69,11 @@ let setPeg currentGuess index peg_str =
   | 2 -> { currentGuess with three = peg_str }
   | 3 -> { currentGuess with four = peg_str }
   | _ -> raise InvalidLetter
+
+let calculateGameState model score =
+  if List.length model.pastGuesses - 1 >= maxGuesses then Lost
+  else if score.exactMatches = 4 then Won
+  else Playing
 
 let handleGuess model =
   let guess = [
@@ -71,7 +85,8 @@ let handleGuess model =
   in let score = getScore guess model.secret
   in { model with 
     currentGuess = emptyGuess; 
-    pastGuesses = { guess; score } :: model.pastGuesses
+    pastGuesses = { guess; score } :: model.pastGuesses;
+    gameStatus = calculateGameState model score;
   }
 
 let update model = function
@@ -101,6 +116,26 @@ let view_enterguess model =
       [ text "Guess" ]
     ]
 
+let view_won model =
+  let numGuesses = List.length model.pastGuesses in
+  div
+    []
+    [ h2 [] [ text "You won!" ]
+    ; div [] [ text {j|It took you $numGuesses guesses|j} ]
+    ]
+
+let view_lost _ =
+  div
+    []
+    [ h2 [] [ text "Sorry, you lost :(" ]
+    ]
+
+let view_enterguess_or_winlose model =
+  match model.gameStatus with
+  | Playing -> view_enterguess model
+  | Won -> view_won model
+  | Lost -> view_lost model
+
 let view_pastguess pastGuess =
   let guess = pastGuess.guess
   in div
@@ -125,14 +160,7 @@ let view model =
     [ header
       [ style "text-align" "center"]
       [ h1 [] [ text "MasterMind!" ] ]
-    ; view_enterguess model
-    ; div
-      []
-      [ text model.currentGuess.one
-      ; text model.currentGuess.two
-      ; text model.currentGuess.three
-      ; text model.currentGuess.four
-      ]
+    ; view_enterguess_or_winlose model
     ; view_pastguesses model
     ]
 

@@ -72,7 +72,8 @@ function init(param) {
             ]
           ],
           /* currentGuess */emptyGuess,
-          /* pastGuesses : [] */0
+          /* pastGuesses : [] */0,
+          /* gameStatus : Playing */0
         ];
 }
 
@@ -111,6 +112,16 @@ function setPeg(currentGuess, index, peg_str) {
   }
 }
 
+function calculateGameState(model, score) {
+  if ((List.length(model[/* pastGuesses */2]) - 1 | 0) >= 21) {
+    return /* Lost */2;
+  } else if (score[/* exactMatches */0] === 4) {
+    return /* Won */1;
+  } else {
+    return /* Playing */0;
+  }
+}
+
 function handleGuess(model) {
   var guess_000 = letterToPeg(model[/* currentGuess */1][/* one */0]);
   var guess_001 = /* :: */[
@@ -137,7 +148,8 @@ function handleGuess(model) {
               /* score */score
             ],
             model[/* pastGuesses */2]
-          ]
+          ],
+          /* gameStatus */calculateGameState(model, score)
         ];
 }
 
@@ -146,7 +158,8 @@ function update(model, param) {
     return /* record */[
             /* secret */model[/* secret */0],
             /* currentGuess */setPeg(model[/* currentGuess */1], param[0], param[1]),
-            /* pastGuesses */model[/* pastGuesses */2]
+            /* pastGuesses */model[/* pastGuesses */2],
+            /* gameStatus */model[/* gameStatus */3]
           ];
   } else {
     return handleGuess(model);
@@ -196,6 +209,46 @@ function view_enterguess(model) {
             ]);
 }
 
+function view_won(model) {
+  var numGuesses = List.length(model[/* pastGuesses */2]);
+  return Tea_html.div(undefined, undefined, /* [] */0, /* :: */[
+              Tea_html.h2(undefined, undefined, /* [] */0, /* :: */[
+                    Tea_html.text("You won!"),
+                    /* [] */0
+                  ]),
+              /* :: */[
+                Tea_html.div(undefined, undefined, /* [] */0, /* :: */[
+                      Tea_html.text("It took you " + (String(numGuesses) + " guesses")),
+                      /* [] */0
+                    ]),
+                /* [] */0
+              ]
+            ]);
+}
+
+function view_lost(param) {
+  return Tea_html.div(undefined, undefined, /* [] */0, /* :: */[
+              Tea_html.h2(undefined, undefined, /* [] */0, /* :: */[
+                    Tea_html.text("Sorry, you lost :("),
+                    /* [] */0
+                  ]),
+              /* [] */0
+            ]);
+}
+
+function view_enterguess_or_winlose(model) {
+  var match = model[/* gameStatus */3];
+  switch (match) {
+    case 0 : 
+        return view_enterguess(model);
+    case 1 : 
+        return view_won(model);
+    case 2 : 
+        return view_lost(model);
+    
+  }
+}
+
 function view_pastguess(pastGuess) {
   var guess = pastGuess[/* guess */0];
   return Tea_html.div(undefined, undefined, /* [] */0, /* :: */[
@@ -239,25 +292,10 @@ function view(model) {
                     /* [] */0
                   ]),
               /* :: */[
-                view_enterguess(model),
+                view_enterguess_or_winlose(model),
                 /* :: */[
-                  Tea_html.div(undefined, undefined, /* [] */0, /* :: */[
-                        Tea_html.text(model[/* currentGuess */1][/* one */0]),
-                        /* :: */[
-                          Tea_html.text(model[/* currentGuess */1][/* two */1]),
-                          /* :: */[
-                            Tea_html.text(model[/* currentGuess */1][/* three */2]),
-                            /* :: */[
-                              Tea_html.text(model[/* currentGuess */1][/* four */3]),
-                              /* [] */0
-                            ]
-                          ]
-                        ]
-                      ]),
-                  /* :: */[
-                    view_pastguesses(model),
-                    /* [] */0
-                  ]
+                  view_pastguesses(model),
+                  /* [] */0
                 ]
               ]
             ]);
@@ -278,7 +316,8 @@ var partial_arg_000 = /* model : record */[
     ]
   ],
   /* currentGuess */emptyGuess,
-  /* pastGuesses : [] */0
+  /* pastGuesses : [] */0,
+  /* gameStatus : Playing */0
 ];
 
 var partial_arg = /* record */[
@@ -291,16 +330,23 @@ function main(param, param$1) {
   return Tea_app.beginnerProgram(partial_arg, param, param$1);
 }
 
+var maxGuesses = 21;
+
 exports.pegToLetter = pegToLetter;
 exports.InvalidLetter = InvalidLetter;
 exports.letterToPeg = letterToPeg;
 exports.emptyGuess = emptyGuess;
 exports.init = init;
+exports.maxGuesses = maxGuesses;
 exports.setPeg = setPeg;
+exports.calculateGameState = calculateGameState;
 exports.handleGuess = handleGuess;
 exports.update = update;
 exports.view_peginput = view_peginput;
 exports.view_enterguess = view_enterguess;
+exports.view_won = view_won;
+exports.view_lost = view_lost;
+exports.view_enterguess_or_winlose = view_enterguess_or_winlose;
 exports.view_pastguess = view_pastguess;
 exports.view_pastguesses = view_pastguesses;
 exports.view = view;

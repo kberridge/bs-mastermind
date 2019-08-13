@@ -6,6 +6,15 @@ type codePeg =
   | Orange
   | Purple
 
+let codePegs = [
+  Red;
+  Green;
+  Blue;
+  Yellow;
+  Orange;
+  Purple;
+]
+
 type score = {
   exactMatches: int;
   colorMatches: int

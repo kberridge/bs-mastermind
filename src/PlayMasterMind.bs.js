@@ -2,7 +2,6 @@
 'use strict';
 
 var List = require("bs-platform/lib/js/list.js");
-var Vdom = require("bucklescript-tea/src-ocaml/vdom.js");
 var $$String = require("bs-platform/lib/js/string.js");
 var Tea_app = require("bucklescript-tea/src-ocaml/tea_app.js");
 var Tea_html = require("bucklescript-tea/src-ocaml/tea_html.js");
@@ -166,22 +165,40 @@ function update(model, param) {
   }
 }
 
+function blankOption(param) {
+  return Tea_html.option$prime(undefined, undefined, /* :: */[
+              Tea_html.value(""),
+              /* [] */0
+            ], /* :: */[
+              Tea_html.text(""),
+              /* [] */0
+            ]);
+}
+
 function view_peginput(peg_str, n) {
-  return Tea_html.input$prime(undefined, undefined, /* :: */[
-              Tea_html.value(peg_str),
+  return Tea_html.select(undefined, undefined, /* :: */[
+              Tea_html.onChange(undefined, (function (value) {
+                      return /* SetPeg */[
+                              n,
+                              value
+                            ];
+                    })),
               /* :: */[
-                Tea_html.onInput(undefined, (function (str) {
-                        return /* SetPeg */[
-                                n,
-                                str
-                              ];
-                      })),
-                /* :: */[
-                  Vdom.attribute("", "maxlength", "1"),
-                  /* [] */0
-                ]
+                Tea_html.value(peg_str),
+                /* [] */0
               ]
-            ], /* [] */0);
+            ], /* :: */[
+              blankOption(/* () */0),
+              List.map((function (l) {
+                      return Tea_html.option$prime(undefined, undefined, /* :: */[
+                                  Tea_html.value(l),
+                                  /* [] */0
+                                ], /* :: */[
+                                  Tea_html.text(l),
+                                  /* [] */0
+                                ]);
+                    }), List.map(pegToLetter, MasterMind$ReactHooksTemplate.codePegs))
+            ]);
 }
 
 function view_enterguess(model) {
@@ -342,6 +359,7 @@ exports.setPeg = setPeg;
 exports.calculateGameState = calculateGameState;
 exports.handleGuess = handleGuess;
 exports.update = update;
+exports.blankOption = blankOption;
 exports.view_peginput = view_peginput;
 exports.view_enterguess = view_enterguess;
 exports.view_won = view_won;

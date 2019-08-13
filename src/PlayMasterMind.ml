@@ -96,13 +96,21 @@ let update model = function
     }
   | Guess -> handleGuess model
 
+let blankOption () = option' [ value "" ] [ text "" ]
+
 let view_peginput peg_str n =
-  input'
+  select
+    [ onChange (fun value -> (SetPeg (n, value)))
+    ; value peg_str
+    ]
+    (blankOption() :: (codePegs |> List.map pegToLetter |> List.map (fun l -> option' [ value l ] [ text l ])))
+
+  (* input'
     [ value peg_str
     ; onInput (fun str -> (SetPeg (n, str)))
     ; Vdom.attribute "" "maxlength" "1"
     ]
-    []
+    [] *)
 
 let view_enterguess model = 
   div

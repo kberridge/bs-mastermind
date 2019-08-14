@@ -2,11 +2,11 @@
 'use strict';
 
 var Jest = require("@glennsl/bs-jest/src/jest.js");
-var MasterMind$ReactHooksTemplate = require("../src/MasterMind.bs.js");
+var MasterMind$BsMastermind = require("../src/MasterMind.bs.js");
 
 Jest.describe("Expect", (function (param) {
         Jest.test("countExactMatches", (function (param) {
-                var count = MasterMind$ReactHooksTemplate.countExactMatches(/* :: */[
+                var count = MasterMind$BsMastermind.countExactMatches(/* :: */[
                       /* Red */0,
                       /* :: */[
                         /* Green */1,
@@ -34,7 +34,7 @@ Jest.describe("Expect", (function (param) {
                 return Jest.Expect[/* toBe */2](2, Jest.Expect[/* expect */0](count));
               }));
         Jest.test("countAllMatches with exact matches only", (function (param) {
-                var count = MasterMind$ReactHooksTemplate.countAllMatches(/* :: */[
+                var count = MasterMind$BsMastermind.countAllMatches(/* :: */[
                       /* Red */0,
                       /* :: */[
                         /* Green */1,
@@ -62,7 +62,7 @@ Jest.describe("Expect", (function (param) {
                 return Jest.Expect[/* toBe */2](2, Jest.Expect[/* expect */0](count));
               }));
         Jest.test("countAllMatches with partial matches only", (function (param) {
-                var count = MasterMind$ReactHooksTemplate.countAllMatches(/* :: */[
+                var count = MasterMind$BsMastermind.countAllMatches(/* :: */[
                       /* Red */0,
                       /* :: */[
                         /* Green */1,
@@ -90,7 +90,7 @@ Jest.describe("Expect", (function (param) {
                 return Jest.Expect[/* toBe */2](2, Jest.Expect[/* expect */0](count));
               }));
         Jest.test("countAllMatches with partial matches and possible double match", (function (param) {
-                var count = MasterMind$ReactHooksTemplate.countAllMatches(/* :: */[
+                var count = MasterMind$BsMastermind.countAllMatches(/* :: */[
                       /* Red */0,
                       /* :: */[
                         /* Green */1,
@@ -118,7 +118,7 @@ Jest.describe("Expect", (function (param) {
                 return Jest.Expect[/* toBe */2](1, Jest.Expect[/* expect */0](count));
               }));
         Jest.test("countAllMatches with exact matches and partial matches and possible double match", (function (param) {
-                var count = MasterMind$ReactHooksTemplate.countAllMatches(/* :: */[
+                var count = MasterMind$BsMastermind.countAllMatches(/* :: */[
                       /* Red */0,
                       /* :: */[
                         /* Green */1,
@@ -146,7 +146,7 @@ Jest.describe("Expect", (function (param) {
                 return Jest.Expect[/* toBe */2](2, Jest.Expect[/* expect */0](count));
               }));
         return Jest.test("getScore with exact matches and partial matches and possible double match", (function (param) {
-                      var score = MasterMind$ReactHooksTemplate.getScore(/* :: */[
+                      var score = MasterMind$BsMastermind.getScore(/* :: */[
                             /* Red */0,
                             /* :: */[
                               /* Green */1,

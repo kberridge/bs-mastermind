@@ -6,7 +6,7 @@ var $$String = require("bs-platform/lib/js/string.js");
 var Tea_app = require("bucklescript-tea/src-ocaml/tea_app.js");
 var Tea_html = require("bucklescript-tea/src-ocaml/tea_html.js");
 var Caml_exceptions = require("bs-platform/lib/js/caml_exceptions.js");
-var MasterMind$ReactHooksTemplate = require("./MasterMind.bs.js");
+var MasterMind$BsMastermind = require("./MasterMind.bs.js");
 
 function pegToLetter(param) {
   switch (param) {
@@ -26,7 +26,7 @@ function pegToLetter(param) {
   }
 }
 
-var InvalidLetter = Caml_exceptions.create("PlayMasterMind-ReactHooksTemplate.InvalidLetter");
+var InvalidLetter = Caml_exceptions.create("PlayMasterMind-BsMastermind.InvalidLetter");
 
 function letterToPeg(letter) {
   var upperLetter = $$String.uppercase(letter);
@@ -57,7 +57,7 @@ var emptyGuess = /* record */[
 
 function init(param) {
   return /* record */[
-          /* secret */MasterMind$ReactHooksTemplate.generateSecret(/* () */0),
+          /* secret */MasterMind$BsMastermind.generateSecret(/* () */0),
           /* currentGuess */emptyGuess,
           /* pastGuesses : [] */0,
           /* gameStatus : Playing */0
@@ -125,7 +125,7 @@ function handleGuess(model) {
     guess_000,
     guess_001
   ];
-  var score = MasterMind$ReactHooksTemplate.getScore(guess, model[/* secret */0]);
+  var score = MasterMind$BsMastermind.getScore(guess, model[/* secret */0]);
   return /* record */[
           /* secret */model[/* secret */0],
           /* currentGuess */emptyGuess,
@@ -185,7 +185,7 @@ function view_peginput(peg_str, n) {
                                   Tea_html.text(l),
                                   /* [] */0
                                 ]);
-                    }), List.map(pegToLetter, MasterMind$ReactHooksTemplate.codePegs))
+                    }), List.map(pegToLetter, MasterMind$BsMastermind.codePegs))
             ]);
 }
 

@@ -57,19 +57,7 @@ var emptyGuess = /* record */[
 
 function init(param) {
   return /* record */[
-          /* secret : :: */[
-            /* Red */0,
-            /* :: */[
-              /* Red */0,
-              /* :: */[
-                /* Green */1,
-                /* :: */[
-                  /* Green */1,
-                  /* [] */0
-                ]
-              ]
-            ]
-          ],
+          /* secret */MasterMind$ReactHooksTemplate.generateSecret(/* () */0),
           /* currentGuess */emptyGuess,
           /* pastGuesses : [] */0,
           /* gameStatus : Playing */0
@@ -112,7 +100,7 @@ function setPeg(currentGuess, index, peg_str) {
 }
 
 function calculateGameState(model, score) {
-  if ((List.length(model[/* pastGuesses */2]) - 1 | 0) >= 21) {
+  if ((List.length(model[/* pastGuesses */2]) - 1 | 0) >= 12) {
     return /* Lost */2;
   } else if (score[/* exactMatches */0] === 4) {
     return /* Won */1;
@@ -318,24 +306,7 @@ function view(model) {
             ]);
 }
 
-var partial_arg_000 = /* model : record */[
-  /* secret : :: */[
-    /* Red */0,
-    /* :: */[
-      /* Red */0,
-      /* :: */[
-        /* Green */1,
-        /* :: */[
-          /* Green */1,
-          /* [] */0
-        ]
-      ]
-    ]
-  ],
-  /* currentGuess */emptyGuess,
-  /* pastGuesses : [] */0,
-  /* gameStatus : Playing */0
-];
+var partial_arg_000 = /* model */init(/* () */0);
 
 var partial_arg = /* record */[
   partial_arg_000,
@@ -347,7 +318,7 @@ function main(param, param$1) {
   return Tea_app.beginnerProgram(partial_arg, param, param$1);
 }
 
-var maxGuesses = 21;
+var maxGuesses = 12;
 
 exports.pegToLetter = pegToLetter;
 exports.InvalidLetter = InvalidLetter;
@@ -369,4 +340,4 @@ exports.view_pastguess = view_pastguess;
 exports.view_pastguesses = view_pastguesses;
 exports.view = view;
 exports.main = main;
-/* Tea_html Not a pure module */
+/* partial_arg Not a pure module */

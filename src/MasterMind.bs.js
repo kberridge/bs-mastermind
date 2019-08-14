@@ -3,8 +3,29 @@
 
 var List = require("bs-platform/lib/js/list.js");
 var Curry = require("bs-platform/lib/js/curry.js");
+var Random = require("bs-platform/lib/js/random.js");
 var Caml_obj = require("bs-platform/lib/js/caml_obj.js");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
+
+var codePegs = /* :: */[
+  /* Red */0,
+  /* :: */[
+    /* Green */1,
+    /* :: */[
+      /* Blue */2,
+      /* :: */[
+        /* Yellow */3,
+        /* :: */[
+          /* Orange */4,
+          /* :: */[
+            /* Purple */5,
+            /* [] */0
+          ]
+        ]
+      ]
+    ]
+  ]
+];
 
 function countExactMatches(guess, secret) {
   var counter = function (count, guessPeg, secretPeg) {
@@ -81,29 +102,27 @@ function getScore(guess, secret) {
         ];
 }
 
-var codePegs = /* :: */[
-  /* Red */0,
-  /* :: */[
-    /* Green */1,
-    /* :: */[
-      /* Blue */2,
-      /* :: */[
-        /* Yellow */3,
-        /* :: */[
-          /* Orange */4,
+function generateSecret(param) {
+  Random.self_init(/* () */0);
+  return /* :: */[
+          List.nth(codePegs, Random.$$int(6)),
           /* :: */[
-            /* Purple */5,
-            /* [] */0
+            List.nth(codePegs, Random.$$int(6)),
+            /* :: */[
+              List.nth(codePegs, Random.$$int(6)),
+              /* :: */[
+                List.nth(codePegs, Random.$$int(6)),
+                /* [] */0
+              ]
+            ]
           ]
-        ]
-      ]
-    ]
-  ]
-];
+        ];
+}
 
 exports.codePegs = codePegs;
 exports.countExactMatches = countExactMatches;
 exports.findi = findi;
 exports.countAllMatches = countAllMatches;
 exports.getScore = getScore;
+exports.generateSecret = generateSecret;
 /* No side effect */

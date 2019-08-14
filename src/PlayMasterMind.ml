@@ -54,13 +54,13 @@ let letterToPeg letter =
 let emptyGuess = {one=""; two=""; three=""; four=""}
 
 let init () = {
-  secret = [Red; Red; Green; Green]; (* todo: generate! *)
+  secret = generateSecret();
   currentGuess = emptyGuess;
   pastGuesses = [];
   gameStatus = Playing;
 }
 
-let maxGuesses = 21
+let maxGuesses = 12
 
 let setPeg currentGuess index peg_str = 
   match index with

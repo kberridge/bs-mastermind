@@ -56,3 +56,15 @@ let getScore guess secret =
   let exactMatches = countExactMatches guess secret in
   let colorMatches = (countAllMatches guess secret) - exactMatches in
   {exactMatches = exactMatches; colorMatches = colorMatches}
+
+let generateSecret () =
+  let randomPeg () =
+    List.nth codePegs (Random.int 6)
+  in
+  Random.self_init();
+  [
+    randomPeg();
+    randomPeg();
+    randomPeg();
+    randomPeg();
+  ]
